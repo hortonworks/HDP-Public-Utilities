@@ -17,9 +17,9 @@
 -->
 # Downloading from client machine
 
-* wget --no-check-certificate https://github.com/pcodding/HDPSETools/zipball/master -O tools.zip
+* wget --no-check-certificate https://github.com/hortonworks/HDP-Public-Utilities/zipball/master -O tools.zip
 * unzip tools.zip
-* mv pc\*/Installation/\*.sh .
+* mv hortonworks-HDP\*/Installation/\*.sh .
 * chmod u+x *.sh
 
 # SE Tool Command examples

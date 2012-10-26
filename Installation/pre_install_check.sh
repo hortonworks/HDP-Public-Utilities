@@ -35,9 +35,10 @@ for host in `cat Hostdetail.txt`; do
   cat /proc/meminfo  | grep MemTotal | awk '{ print $2/1024/1024 " GB"; }'
   printHeading "Checking disk space"
   df -h
-  printHeading "Checking OS and arch"
+  printHeading "Checking OS, arch, and kernel"
   cat /etc/issue.net | head -1 
   arch
+  uname -a
   printHeading "Checking host files"
   cat /etc/hosts
   printHeading "Checking hostname"
