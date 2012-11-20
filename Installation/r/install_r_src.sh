@@ -22,9 +22,9 @@
 export R_PATH=/root/hdp/r/R-2.15.1
 export RMR_PATH=/root/hdp/r/rmr_1.3.1.tar.gz
 export RHDFS_PATH=/root/hdp/r/rhdfs_1.0.5.tar.gz
-export RHBASE_PATH=/root/hdp/r/rhbase_1.0.4.tar.gz
+export RCPP_PATH=/root/hdp/r/Rcpp_0.9.15.tar.gz
 
-if [ -f $RMR_PATH ] && [ -f $RHDFS_PATH ] && [ -f $RHBASE_PATH ] && [ -f /usr/lib/hadoop/bin/hadoop-config.sh ] && [ ! -f /usr/bin/R ]; then 
+if [ -f $RMR_PATH ] && [ -f $RHDFS_PATH ] && [ -f /usr/lib/hadoop/bin/hadoop-config.sh ] && [ ! -f /usr/bin/R ]; then 
 	echo "Installing R"
 else
 	echo "Please install HDP and download rmr, rhdfs, rhbase and make sure R is not already installed.  If you've already downloaded those projects and R is not installed check the *_PATH variables in this script"
@@ -50,7 +50,7 @@ cd $R_PATH
 ./configure --with-x=no && make && make check && make install
 
 # Validate R
-R --version | grep "2.15.1"
+R --version | grep "2.15"
 
 # Install projects and their dependencies
 if [ $? -eq 0 ]; then
@@ -61,11 +61,11 @@ if [ $? -eq 0 ]; then
 		if [ $? -eq 0 ]; then
 			Rscript -e 'install.packages("digest");'
 			if [ $? -eq 0 ]; then
-				Rscript -e 'install.packages("Rcpp");'
+				R CMD INSTALL Rcpp $RCPP_PATH
 				if [ $? -eq 0 ]; then
 					R CMD INSTALL rmr $RMR_PATH
 					R CMD javareconf
-					Rscript -e 'install.packages("rJava");'
+					R CMD INSTALL Rcpp $RCPP_PATH
 					if [ $? -eq 0 ]; then
 						R CMD INSTALL rhdfs $RHDFS_PATH
 					fi
