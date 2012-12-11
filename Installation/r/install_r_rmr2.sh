@@ -19,7 +19,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-export RMR_PATH=/root/hdp/r/rmr_1.3.1.tar.gz
+export RMR_PATH=/root/hdp/r/rmr2_2.0.2.tar.gz
 export RHDFS_PATH=/root/hdp/r/rhdfs_1.0.5.tar.gz
 export RCPP_PATH=/root/hdp/r/Rcpp_0.9.15.tar.gz
 
@@ -61,7 +61,7 @@ if [ $? -eq 0 ]; then
 				Rscript -e 'install.packages("RCurl")'
 				Rscript -e 'install.packages("httr")'
 				if [ $? -eq 0 ]; then
-					R CMD INSTALL rmr $RMR_PATH
+					R CMD INSTALL rmr2 $RMR_PATH
 					R CMD javareconf
 					Rscript -e 'install.packages("rJava");'
 					if [ $? -eq 0 ]; then
