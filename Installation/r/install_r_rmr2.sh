@@ -60,6 +60,7 @@ if [ $? -eq 0 ]; then
 				Rscript -e 'install.packages("functional")'
 				Rscript -e 'install.packages("RCurl")'
 				Rscript -e 'install.packages("httr")'
+				Rscript -e 'install.packages("plyr")'
 				if [ $? -eq 0 ]; then
 					R CMD INSTALL rmr2 $RMR_PATH
 					R CMD javareconf
