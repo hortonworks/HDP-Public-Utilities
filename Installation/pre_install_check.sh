@@ -48,6 +48,12 @@ for host in `cat Hostdetail.txt`; do
   iptables -vnL
   printHeading "Checking SELinux configuration"
   cat /etc/selinux/config | grep ^SELINUX
+  printHeading "Listing yum repositories"
+  yum repolist
+  REPOLIST=`yum repolist`
+  printHeading "Checking for optional or extra repostitory"
+  echo $REPOLIST | egrep 'optional|extra' >/dev/null 2>&1
+  if [ $? -eq 0 ]; then echo "Optional repo available"; else echo "WARNING: There are no optional or extra repositories available!!"; fi
   printHeading "Checking prereq packages"
   RPMS=`rpm -qa`
   for package in ${PREREQS[@]}; do
