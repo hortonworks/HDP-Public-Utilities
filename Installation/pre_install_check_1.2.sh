@@ -28,7 +28,12 @@ for host in `cat Hostdetail.txt`; do
     echo -e "\n${txtund}[*] $1 \n######################################################${txtrst}"
   }
   PREREQS=( yum rpm ssh curl wget net-snmp net-snmp-utils ntpd )
-  POSSIBLE_CONFLICTS=( ruby postgresql nagios ganglia cloudera hadoop )
+  POSSIBLE_CONFLICTS=( ruby postgresql nagios ganglia ganglia-gmetad libganglia libconfuse cloudera hadoop httpd apache2 http-server )
+  CONFLICTING_CONF_DIRS=( /etc/hadoop /etc/hbase /etc/hcatalog /etc/hive /etc/flume /etc/ganglia /etc/httpd /etc/nagios /etc/oozie /etc/sqoop )
+  CONFLICTING_RUN_DIRS=( /var/run/hadoop /var/run/templeton /var/run/oozie /var/run/hive /var/run/hbase /var/run/ganglia /var/run/flume /var/run/zookeeper )
+  CONFLICTING_LOG_DIRS=( /var/log/hadoop /var/log/nagios /var/log/flume /var/log/hbase /var/log/hive /var/log/httpd /var/log/templeton /var/log/zookeeper )
+  CONFLICTING_USERS=( postgres puppet ambari_qa hadoop_deploy rrdcached apache dbus zookeeper mapred hdfs hbase hive hcat mysql nagios oozie sqoop flume)
+  REPOS=( HDP-1 HDP-UTILS epel)
   printHeading "Checking Processors"
   cat /proc/cpuinfo  | grep 'model name' | awk -F': ' '{ print $2; }'
   printHeading "Checking RAM"
@@ -51,6 +56,41 @@ for host in `cat Hostdetail.txt`; do
   printHeading "Listing yum repositories"
   yum repolist
   REPOLIST=`yum repolist`
+  printHeading "Looking for required repos"
+  for repo in ${REPOS[@]}; do
+  	echo -n "${repo} ... "
+	echo $REPOLIST | grep ${repo} > /dev/null
+	if [ $? -ne 0 ]; then
+	  echo "Not Found!!"
+	else
+	  echo "Found"
+	fi
+  done
+  printHeading "Checking for conflicting entries in /etc"
+  for path in ${CONFLICTING_CONF_DIRS[@]}; do
+	if [ -f ${path} ] || [ -d ${path} ]; then
+		echo "Found ${path}!!"
+	fi
+  done
+  printHeading "Checking for conflicting entries in /var/run"
+  for path in ${CONFLICTING_RUN_DIRS[@]}; do
+	if [ -f ${path} ] || [ -d ${path} ]; then
+		echo "Found ${path}!!"
+	fi
+  done
+  printHeading "Checking for conflicting entries in /log"
+  for path in ${CONFLICTING_LOG_DIRS[@]}; do
+	if [ -f ${path} ] || [ -d ${path} ]; then
+		echo "Found ${path}!!"
+	fi
+  done
+  printHeading "Checking for conflicting users in /etc/passwd"
+  for user in ${CONFLICTING_USERS[@]}; do
+	cat /etc/passwd | grep $user > /dev/null
+	if [ $? -eq 0 ]; then
+		echo "Found user: ${user}!!"
+	fi
+  done
   printHeading "Checking prereq packages"
   RPMS=`rpm -qa`
   for package in ${PREREQS[@]}; do
@@ -63,5 +103,9 @@ for host in `cat Hostdetail.txt`; do
     echo $RPMS | grep $package > /dev/null
     if [ $? -eq 0 ]; then echo "FOUND! `rpm -qa | grep $package`" ; else echo "not installed"; fi
   done
+  printHeading "Checking for java processes"
+  ps aux | grep java
+  printHeading "Checking for listening Hadoop processes"
+  netstat -natp | grep java
 END
 done
