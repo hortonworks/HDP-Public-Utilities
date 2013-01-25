@@ -28,7 +28,7 @@ for host in `cat Hostdetail.txt`; do
     echo -e "\n${txtund}[*] $1 \n######################################################${txtrst}"
   }
   PREREQS=( yum rpm ssh curl wget net-snmp net-snmp-utils ntpd )
-  POSSIBLE_CONFLICTS=( ruby postgresql nagios ganglia ganglia-gmetad libganglia libconfuse cloudera hadoop httpd apache2 http-server )
+  POSSIBLE_CONFLICTS=( ruby postgresql nagios ganglia ganglia-gmetad libganglia libconfuse cloudera cdh mapr hadoop httpd apache2 http-server )
   CONFLICTING_CONF_DIRS=( /etc/hadoop /etc/hbase /etc/hcatalog /etc/hive /etc/flume /etc/ganglia /etc/httpd /etc/nagios /etc/oozie /etc/sqoop )
   CONFLICTING_RUN_DIRS=( /var/run/hadoop /var/run/templeton /var/run/oozie /var/run/hive /var/run/hbase /var/run/ganglia /var/run/flume /var/run/zookeeper )
   CONFLICTING_LOG_DIRS=( /var/log/hadoop /var/log/nagios /var/log/flume /var/log/hbase /var/log/hive /var/log/httpd /var/log/templeton /var/log/zookeeper )
