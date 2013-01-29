@@ -30,6 +30,7 @@ if [ ! -d /root/hdp ]; then
 	cd /root/hdp
 	read -p "I'm going to need a list of hosts, please come up with the list, then press ENTER"
 	vi Hostdetail.txt
+	yum -y install wget
 	wget --no-check-certificate https://github.com/hortonworks/HDP-Public-Utilities/zipball/master -O tools.zip
 	unzip tools.zip
 	mv hortonworks-HDP-Public-Utilities*/Installation/*.sh .
