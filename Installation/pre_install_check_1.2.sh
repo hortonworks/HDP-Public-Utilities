@@ -29,10 +29,11 @@ for host in `cat Hostdetail.txt`; do
   }
   PREREQS=( yum rpm ssh curl wget net-snmp net-snmp-utils ntpd )
   POSSIBLE_CONFLICTS=( ruby postgresql nagios ganglia ganglia-gmetad libganglia libconfuse cloudera cdh mapr hadoop httpd apache2 http-server )
-  CONFLICTING_CONF_DIRS=( /etc/hadoop /etc/hbase /etc/hcatalog /etc/hive /etc/flume /etc/ganglia /etc/httpd /etc/nagios /etc/oozie /etc/sqoop )
-  CONFLICTING_RUN_DIRS=( /var/run/hadoop /var/run/templeton /var/run/oozie /var/run/hive /var/run/hbase /var/run/ganglia /var/run/flume /var/run/zookeeper )
-  CONFLICTING_LOG_DIRS=( /var/log/hadoop /var/log/nagios /var/log/flume /var/log/hbase /var/log/hive /var/log/httpd /var/log/templeton /var/log/zookeeper )
-  CONFLICTING_USERS=( postgres puppet ambari_qa hadoop_deploy rrdcached apache dbus zookeeper mapred hdfs hbase hive hcat mysql nagios oozie sqoop flume)
+  CONFLICTING_CONF_DIRS=( /etc/hadoop /etc/hbase /etc/hcatalog /etc/hive /etc/flume /etc/ganglia /etc/httpd /etc/nagios /etc/oozie /etc/sqoop /etc/hue /etc/flume)
+  CONFLICTING_RUN_DIRS=( /var/run/zookeeper /var/run/hadoop /var/run/hbase /var/run/ganglia /var/run/zookeeper /var/run/templeton /var/run/oozie /var/run/hive /var/run/hue /var/run/sqoop)
+  CONFLICTING_LOG_DIRS=( /var/log/zookeeper /var/log/hadoop /var/log/nagios /var/log/hbase /var/log/hive /var/log/templeton /var/log/oozie /var/log/flume /var/log/hadoop* /var/log/sqoop )
+  CONFLICTING_USERS=( postgres puppet ambari_qa hadoop_deploy rrdcached apache zookeeper mapred hdfs hbase hive hcat mysql nagios oozie sqoop flume hbase)
+  CONFLICTING_LIB_DIRS=( /var/lib/hadoop* /usr/lib/oozie /usr/lib/hive)
   REPOS=( HDP-1 HDP-UTILS epel)
   printHeading "Checking Processors"
   cat /proc/cpuinfo  | grep 'model name' | awk -F': ' '{ print $2; }'
@@ -84,12 +85,22 @@ for host in `cat Hostdetail.txt`; do
 		echo "Found ${path}!!"
 	fi
   done
+  printHeading "Checking for conflicting entries in /*/lib"
+  for path in ${CONFLICTING_LIB_DIRS[@]}; do
+	if [ -f ${path} ] || [ -d ${path} ]; then
+		echo "Found ${path}!!"
+	fi
+  done
   printHeading "Checking for conflicting users in /etc/passwd"
   for user in ${CONFLICTING_USERS[@]}; do
 	cat /etc/passwd | grep $user > /dev/null
 	if [ $? -eq 0 ]; then
 		echo "Found user: ${user}!!"
 	fi
+  done
+  printHeading "Checking for conflicting misc directories"
+  for user in ${CONFLICTING_USERS[@]}; do
+	find / -name "$user*" -type d
   done
   printHeading "Checking prereq packages"
   RPMS=`rpm -qa`
