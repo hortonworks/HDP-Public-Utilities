@@ -33,6 +33,7 @@ for host in `cat Hostdetail.txt`; do
   CONFLICTING_RUN_DIRS=( /var/run/zookeeper /var/run/hadoop /var/run/hbase /var/run/ganglia /var/run/zookeeper /var/run/templeton /var/run/oozie /var/run/hive /var/run/hue /var/run/sqoop)
   CONFLICTING_LOG_DIRS=( /var/log/zookeeper /var/log/hadoop /var/log/nagios /var/log/hbase /var/log/hive /var/log/templeton /var/log/oozie /var/log/flume /var/log/hadoop* /var/log/sqoop )
   CONFLICTING_USERS=( postgres puppet ambari_qa hadoop_deploy rrdcached apache zookeeper mapred hdfs hbase hive hcat mysql nagios oozie sqoop flume hbase)
+  CONFLICTING_PACKAGES=( ambari hadoop* hbase hcatalog hive ganglia nagios oozie sqoop hue zookeeper mapred hdfs flume)
   CONFLICTING_LIB_DIRS=( /var/lib/hadoop* /usr/lib/oozie /usr/lib/hive)
   REPOS=( HDP-1 HDP-UTILS epel)
   printHeading "Checking Processors"
@@ -99,8 +100,8 @@ for host in `cat Hostdetail.txt`; do
 	fi
   done
   printHeading "Checking for conflicting misc directories"
-  for user in ${CONFLICTING_USERS[@]}; do
-	find / -name "$user*" -type d
+  for package in ${CONFLICTING_PACKAGES[@]}; do
+	find / -name "$package*" -type d
   done
   printHeading "Checking prereq packages"
   RPMS=`rpm -qa`
