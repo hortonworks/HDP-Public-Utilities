@@ -14,12 +14,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-read -p "This is going to remove software, users, and directories...are you sure you want to proceed [y|n]" SURE
+read -p "This is going to remove software, users, and directories...are you sure you want to proceed and have you made sure to update the REPO_FILTER environmental variable of the ./cleanup_script.sh? [y|n] " SURE
 if [ $SURE == "y" ]; then
 	./run_command.sh 'killall java'
-	# Cleanup stock package
-	./run_command.sh 'yum -y erase ruby ruby-irb ruby-libs ruby-shadow ruby-rdoc ruby-augeas rubygems libselinux-ruby ruby-devel libganglia libconfuse hdp_mon_ganglia_addons ganglia-gmond postgresql-server postgresql postgresql-libs ganglia-gmond-python ganglia ganglia-gmetad ganglia-web ganglia-devel httpd mysql mysql-server mysqld'
 	
+	# Cleanup stock package that would conflict with the HDP install
+	./run_command.sh 'yum -y erase ruby ruby-irb ruby-libs ruby-shadow ruby-rdoc ruby-augeas rubygems libselinux-ruby ruby-devel libganglia libconfuse hdp_mon_ganglia_addons ganglia-gmond postgresql-server postgresql postgresql-libs ganglia-gmond-python ganglia ganglia-gmetad ganglia-web ganglia-devel httpd mysql mysql-server mysqld puppet'
+	
+	# Distribute and execute the script that will be used to clean each node.
 	./copy_file.sh cleanup_script.sh /tmp
-	./run_command.sh "bash /tmp/cleanup_script.sh"
+	./run_command.sh "bash /tmp/cleanup_script.sh clean"
 fi
