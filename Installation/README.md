@@ -15,14 +15,39 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-# Downloading from client machine
+# Tool Installation
+
+## Options
+
+### Installing using a script
+
+Simply copy the contents of the install_tools.sh script and create a file on the server you wish to run it from, then execute the script.
+
+### Downloading from client machine manually
 
 * wget --no-check-certificate https://github.com/hortonworks/HDP-Public-Utilities/zipball/master -O tools.zip
 * unzip tools.zip
 * mv hortonworks-HDP\*/Installation/\*.sh .
 * chmod u+x *.sh
 
-# SE Tool Command examples
+## Setup
+In order for the tools to know which nodes are to be used, a `Hostdetail.txt` files must be created that contains the fully qualified domain name of each server in the cluster.  This can be done by using the example below:
+
+`vi /root/hdp/Hostdetail.txt`
+
+	host1.hortonworks.local
+	host2.hortonworks.local
+	host3.hortonworks.local
+ 
+# Command Examples
+
+## Pre Installation Check (HDP 1.2)
+
+The pre-installation check will check for a number of missing or conflicting files, packages, and system settings.  It will also assist with troubleshooting installation issues if they arise.
+
+`./pre_install_check_1.2.sh | tee report.txt`
+
+This will run the pre installation check and output the progress to standard output and to the report.txt file.
 
 ## Run Command
 
