@@ -27,7 +27,7 @@ for host in `cat Hostdetail.txt`; do
   function printHeading() {
     echo -e "\n${txtund}[*] $1 \n######################################################${txtrst}"
   }
-  PREREQS=( yum rpm ssh curl wget net-snmp net-snmp-utils ntpd )
+  PREREQS=( yum rpm ssh curl wget ntpd )
   POSSIBLE_CONFLICTS=( ruby postgresql nagios ganglia ganglia-gmetad libganglia libconfuse cloudera cdh mapr hadoop httpd apache2 http-server )
   CONFLICTING_CONF_DIRS=( /etc/hadoop /etc/hbase /etc/hcatalog /etc/hive /etc/flume /etc/ganglia /etc/httpd /etc/nagios /etc/oozie /etc/sqoop /etc/hue /etc/flume)
   CONFLICTING_RUN_DIRS=( /var/run/zookeeper /var/run/hadoop /var/run/hbase /var/run/ganglia /var/run/zookeeper /var/run/templeton /var/run/oozie /var/run/hive /var/run/hue /var/run/sqoop)
@@ -35,6 +35,7 @@ for host in `cat Hostdetail.txt`; do
   CONFLICTING_USERS=( postgres puppet ambari_qa hadoop_deploy rrdcached apache zookeeper mapred hdfs hbase hive hcat mysql nagios oozie sqoop flume hbase)
   CONFLICTING_PACKAGES=( ambari hadoop* hbase hcatalog hive ganglia nagios oozie sqoop hue zookeeper mapred hdfs flume)
   CONFLICTING_LIB_DIRS=( /var/lib/hadoop* /usr/lib/oozie /usr/lib/hive)
+  CONFLICTING_OS_DETECTION_FILES=( /etc/debian_version /etc/debian_version /etc/gentoo-release /etc/fedora-release /etc/mandriva-release /etc/mandrake-release /etc/meego-release /etc/arch-release /etc/oracle-release /etc/enterprise-release /etc/ovs-release /etc/vmware-release /etc/bluewhite64-version /etc/slamd64-version /etc/slackware-version /etc/alpine-release )
   REPOS=( HDP-1 HDP-UTILS epel)
   printHeading "Checking Processors"
   cat /proc/cpuinfo  | grep 'model name' | awk -F': ' '{ print $2; }'
@@ -111,7 +112,7 @@ for host in `cat Hostdetail.txt`; do
     if [ $? -eq 0 ]; then echo "found";  else echo "NOT FOUND!";  fi
   done
   for package in ${POSSIBLE_CONFLICTS[@]}; do
-    echo -n "Looking for posible conflicting package: $package - "
+    echo -n "Looking for possible conflicting package: $package - "
     echo $RPMS | grep $package > /dev/null
     if [ $? -eq 0 ]; then echo "FOUND! `rpm -qa | grep $package`" ; else echo "not installed"; fi
   done
@@ -119,5 +120,9 @@ for host in `cat Hostdetail.txt`; do
   ps aux | grep java
   printHeading "Checking for listening Hadoop processes"
   netstat -natp | grep java
+  printHeading "Checking for conflicting OS detection files"
+  for file in ${CONFLICTING_OS_DETECTION_FILES[@]}; do
+	if [ -f $file ]; then echo "FOUND! $file" ; else echo "not found"; fi
+  done
 END
 done
