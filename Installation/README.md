@@ -37,8 +37,8 @@ In order for the tools to know which nodes are to be used, a `Hostdetail.txt` fi
 
 	host1.hortonworks.local
 	host2.hortonworks.local
-	host3.hortonworks.local
- 
+	host3.hortonworks.local 
+
 # Command Examples
 
 ## Pre Installation Check (HDP 1.2)
@@ -66,3 +66,10 @@ Look at hostname resolution on all nodes
 ## Kick Nodes
 
 `./kick_nodes.sh`
+
+# Cleanup Scripts
+
+Before running these scripts it's important to do the following:
+
+* Backup configuration directories in /etc such as /etc/hadoop/conf
+* Backup mysql/postgres databases if necessary as they will be uninstalled, and in the case of MySQL have the data directory wiped
