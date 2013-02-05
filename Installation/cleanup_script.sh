@@ -23,7 +23,11 @@ if [ $# -eq 1 ]; then
 	echo $PROJECT_REGEX
 
 	# Erase packages found from repo list
-	yum -y erase ${PACKAGES[@]};
+	if [ ${#PACKAGES[@]} -gt "0" ]; then
+		yum -y erase ${PACKAGES[@]};
+	else
+		echo "No packages to erase"
+	fi
 	
 	# Erase packages that are typical, in the event the repolist filter is not adequate to dynamically deteremine packages
 	#yum -y erase hadoop-hive hadoop-hbase hadoop-0.20-jobtracker hadoop-zookeeper hadoop-0.20 hadoop-0.20-datanode hadoop-0.20-namenode hadoop-hbase-master hadoop-0.20-native hadoop-pig hadoop-0.20-conf-pseudo hadoop-0.20-secondarynamenode hadoop-zookeeper-server hadoop-0.20-tasktracker oozie oozie-client flume flume-master flume-node sqoop sqoop-metastore hue sqoop-metastore bsub hue-filebrowser hue-useradmin hue hue-help hue-jobbrowser hue-about hue-beeswax hue-proxy hue-server hue-shell hue-plugins cloudera-hue-mysql hue-common cloudera-hadoop-lzo cloudera-cdh zookeeper bigtop-utils bigtop-jsvc cloudera-manager cloudera-manager-repository cloudera-manager-agent cloudera-manager-plugins cloudera-manager-daemons cdh3-repository
@@ -52,7 +56,7 @@ if [ $# -eq 1 ]; then
 	done
 
 	# Removing repo's
-	cd /etc/yum.repos.d && egrep $REPO_FILTER *.repo | awk -F: '{ print $1; }' | sort -u | xargs -n 1 rm
+	cd /etc/yum.repos.d && egrep $REPO_FILTER *.repo | awk -F: '{ print $1; }' | sort -u | xargs -n 1 rm -f
 
 	# Remove CMF files
 	if [ -d /usr/lib64/cmf ]; then

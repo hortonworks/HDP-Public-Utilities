@@ -23,9 +23,7 @@ if [ ! -d /root/hdp ]; then
 		cat /etc/fstab
 		read -p "Continue? [press a key]"
 	fi
-	cat /etc/selinux/config | sed 's/SELINUX=enforcing/SELINUX=disabled/' > t
-	mv t /etc/selinux/config
-	cat /etc/selinux/config
+	sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 	read -p "Continue? [press a key]"
 	cd /root/hdp
 	read -p "I'm going to need a list of hosts, please come up with the list, then press ENTER"
