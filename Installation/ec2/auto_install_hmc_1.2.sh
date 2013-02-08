@@ -19,7 +19,11 @@ if [ ! -d /root/hdp ]; then
 	mkdir /root/hdp
 	read -p "Mount EC2 ephemeral disks? [y|n]" MOUNT_EC2
 	if [ $MOUNT_EC2 == "y" ]; then
-		mount | egrep 'xvd[a-z]\W' | awk '{print $1 "\t" $3 "    ext3    defaults        0 0";}' >> /etc/fstab
+		if [ $OS_VERSION -eq 5 ]; then
+			mount | egrep 'sd[b-c]\W' | awk '{print $1 "\t" $3 "    ext3    defaults        0 0";}' >> /etc/fstab
+		else
+			mount | egrep 'xvd[a-z]\W' | awk '{print $1 "\t" $3 "    ext3    defaults        0 0";}' >> /etc/fstab
+		fi
 		cat /etc/fstab
 		read -p "Continue? [press a key]"
 	fi
