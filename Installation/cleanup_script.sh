@@ -62,6 +62,12 @@ if [ $# -eq 1 ]; then
 	if [ -d /usr/lib64/cmf ]; then
 		rm -rf /usr/lib64/cmf
 	fi
+
+	#Remove PostgreSQL database files
+	if [ -d /var/lib/pgsql ]; then
+		rm -rf /var/lib/pgsql
+	fi
+
 else
 	echo "You're not going to want to run this directly, please run the ./clean_hosts.sh script"
 fi
