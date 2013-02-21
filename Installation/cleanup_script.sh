@@ -67,6 +67,11 @@ if [ $# -eq 1 ]; then
 	if [ -d /var/lib/pgsql ]; then
 		rm -rf /var/lib/pgsql
 	fi
+	
+	#Remove MySQL database files
+	if [ -d /var/lib/mysql ]; then
+		rm -rf /var/lib/mysql
+	fi
 
 else
 	echo "You're not going to want to run this directly, please run the ./clean_hosts.sh script"
