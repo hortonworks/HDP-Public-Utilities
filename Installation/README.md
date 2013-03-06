@@ -30,6 +30,11 @@ Simply copy the contents of the install_tools.sh script and create a file on the
 * mv hortonworks-HDP\*/Installation/\*.sh .
 * chmod u+x *.sh
 
+### Downloading client machine with one line
+
+* wget -qO- --no-check-certificate https://github.com/hortonworks/HDP-Public-Utilities/raw/master/Installation/install_tools.sh  | bash
+
+
 ## Setup
 In order for the tools to know which nodes are to be used, a `Hostdetail.txt` files must be created that contains the fully qualified domain name of each server in the cluster.  This can be done by using the example below:
 
@@ -73,3 +78,5 @@ Before running these scripts it's important to do the following:
 
 * Backup configuration directories in /etc such as /etc/hadoop/conf
 * Backup mysql/postgres databases if necessary as they will be uninstalled, and in the case of MySQL have the data directory wiped
+
+Also running `yum list installed | awk '{ print $3; }' | sort -u` will be helpful to identify how best to build the repo filter.
