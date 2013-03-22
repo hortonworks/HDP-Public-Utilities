@@ -65,7 +65,7 @@ else
 	if [ $OS_VERSION -eq 5 ]; then
 		rpm -Uvh http://public-repo-1.hortonworks.com/ambari/centos5/1.x/GA/ambari-1.2.0.1-1.el5.noarch.rpm
 	else
-		rpm -Uvh http://public-repo-1.hortonworks.com/ambari/centos6/1.x/GA/ambari-1.2.0.1-1.el6.noarch.rpm
+		rpm -Uvh http://public-repo-1.hortonworks.com/ambari/centos6/1.x/GA/ambari-1.x-1.el6.noarch.rpm
 	fi
 	yum -y install epel-release
 	yum -y install ambari-server
