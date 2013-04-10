@@ -25,7 +25,7 @@ if [ $# -eq 1 ]; then
 
 	# Erase packages found from repo list
 	if [ ${#PACKAGES[@]} -gt "0" ]; then
-		yum -y erase ${PACKAGES[@]};
+		yum -y erase "${PACKAGES[@]}";
 	else
 		echo "No packages to erase"
 	fi
@@ -44,15 +44,15 @@ if [ $# -eq 1 ]; then
 	for project in ${PROJECT_NAMES[@]}; do
 		# Erase fs entries
 		for base_path in ${PATHS[@]} ; do
-			if [ -d $base_path/$project ] ; then
+			if [ -d "$base_path/$project" ] ; then
 				rm -rf $base_path/$project
 			fi
 		done
 	
 		# Remove users
-		cat /etc/passwd | grep $project > /dev/null
+		cat /etc/passwd | grep "$project" > /dev/null
 		if [ $? -eq 0 ]; then
-			userdel -r $project
+			userdel -r "$project"
 		fi
 	done
 
