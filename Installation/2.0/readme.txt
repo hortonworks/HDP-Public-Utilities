@@ -1,5 +1,3 @@
-README for
-https://hortonworks.box.com/files/0/f/908341882/Install_HDP_2.0.0.2_alpha
 
 * Installs HDP 2.0.0.2 Alpha [HDFS, YARN, TEZ, HIVE, PIG]
 * Supports multiple nodes
@@ -12,6 +10,10 @@ To use the script:
 
 If something fails, you can mostly ctrl-c, fix the pb and re-run the script.
 If the local repository fails in the middle, use -f to force the script to validate it. 
+
+LIMITATIONS
+* Only works for CentOS6
+* Very limited testing performed
 
 TODO
 * HUE
