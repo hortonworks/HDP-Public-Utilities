@@ -46,11 +46,11 @@ In order for the tools to know which nodes are to be used, a `Hostdetail.txt` fi
 
 # Command Examples
 
-## Pre Installation Check (HDP 1.2)
+## Pre Installation Check
 
 The pre-installation check will check for a number of missing or conflicting files, packages, and system settings.  It will also assist with troubleshooting installation issues if they arise.
 
-`./pre_install_check_1.2.sh | tee report.txt`
+`./pre_install_check.sh | tee report.txt`
 
 This will run the pre installation check and output the progress to standard output and to the report.txt file.
 
