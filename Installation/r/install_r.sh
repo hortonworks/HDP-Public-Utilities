@@ -19,11 +19,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-export RMR_PATH=/root/hdp/r/rmr_1.3.1.tar.gz
+export RMR_PATH=/root/hdp/r/rmr2_2.0.2.tar.gz
 export RHDFS_PATH=/root/hdp/r/rhdfs_1.0.5.tar.gz
 export RCPP_PATH=/root/hdp/r/Rcpp_0.9.15.tar.gz
 
-if [ -f $RMR_PATH ] && [ -f $RHDFS_PATH ] && [ -f $RHBASE_PATH ] && [ -f /usr/lib/hadoop/bin/hadoop-config.sh ] && [ ! -f /usr/bin/R ]; then 
+if [ -f $RMR_PATH ] && [ -f $RHDFS_PATH ] && [ -f /usr/lib/hadoop/bin/hadoop-config.sh ] && [ ! -f /usr/bin/R ]; then 
 	echo "Installing R"
 else
 	echo "Please install HDP and download rmr, rhdfs, rhbase and make sure R is not already installed.  If you've already downloaded those projects and R is not installed check the *_PATH variables in this script"
@@ -42,6 +42,7 @@ END
 
 # Install R from epel
 yum -y install R
+yum -y install curl-devel
 
 # Validate R
 R --version | grep "2.15"
@@ -56,8 +57,12 @@ if [ $? -eq 0 ]; then
 			Rscript -e 'install.packages("digest");'
 			if [ $? -eq 0 ]; then
 				R CMD INSTALL Rcpp $RCPP_PATH
+				Rscript -e 'install.packages("functional")'
+				Rscript -e 'install.packages("RCurl")'
+				Rscript -e 'install.packages("httr")'
+				Rscript -e 'install.packages("plyr")'
 				if [ $? -eq 0 ]; then
-					R CMD INSTALL rmr $RMR_PATH
+					R CMD INSTALL rmr2 $RMR_PATH
 					R CMD javareconf
 					Rscript -e 'install.packages("rJava");'
 					if [ $? -eq 0 ]; then
