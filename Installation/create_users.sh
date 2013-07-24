@@ -23,5 +23,6 @@ if [ ! -f users.txt ]; then
 else
 	for user in `cat users.txt`; do
 		./run_command.sh "useradd -g 100 $user"
+		/usr/lib/hadoop/sbin/hadoop-create-user.sh $user
 	done
 fi
