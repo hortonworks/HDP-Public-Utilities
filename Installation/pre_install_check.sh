@@ -43,6 +43,8 @@ for host in `cat Hostdetail.txt`; do
   cat /proc/meminfo  | grep MemTotal | awk '{ print $2/1024/1024 " GB"; }'
   printHeading "Checking disk space"
   df -h
+  printHeading "List all PCI devices"
+  lspci
   printHeading "Checking OS, arch, and kernel"
   cat /etc/issue.net | head -1 
   arch
@@ -59,6 +61,8 @@ for host in `cat Hostdetail.txt`; do
   printHeading "Listing yum repositories"
   yum repolist
   REPOLIST=`yum repolist`
+  printHeading "List all installed yum packages"
+  yum list installed
   printHeading "Looking for required repos"
   for repo in ${REPOS[@]}; do
   	echo -n "${repo} ... "
