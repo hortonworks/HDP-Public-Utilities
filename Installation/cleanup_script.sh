@@ -15,8 +15,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License
 if [ $# -eq 1 ]; then
+	#Cloudera
 	export REPO_FILTER='Cloudera'
+	
+	#HDP 1.3
 	#export REPO_FILTER='Updates-ambari-1.x|HDP-UTILS-1.1.0.15|HDP-1.2.0|AMBARI-1.x'
+	
+	#HDP 2.0
+	#export REPO_FILTER='Updates-ambari-1.4.1.25|HDP-UTILS-1.1.0.16|HDP-2.0.6|ambari-1.x'
 	export PATHS=( /etc /var/log /var/run /usr/lib /var/lib /var/tmp /tmp/ /var )
 	export PACKAGES=(`yum list | egrep -E "$REPO_FILTER" | awk '{ print $1; }' | grep -v '^[0-9]'`)
 	export PROJECT_NAMES=( hadoop* hadoop hbase hcatalog hive ganglia nagios oozie sqoop hue zookeeper mapred hdfs flume puppet ambari_qa hadoop_deploy rrdcached hcat ambari-server ambari-agent)
