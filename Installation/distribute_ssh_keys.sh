@@ -25,7 +25,7 @@ else
 	  echo -e "${txtbld}\n######################################################"
 	  echo -e "# Copying Key: $1 to Host: $host"
 	  echo "######################################################${txtrst}"
-	  ssh -i /tmp/ec2-keypair root@$host 'bash -s' << 'END'
+	  ssh -oStrictHostKeyChecking=no -i /tmp/ec2-keypair root@$host 'bash -s' << 'END'
 	    if [ ! -d ~/.ssh ]; then
 		mkdir ~/.ssh
 	    fi
