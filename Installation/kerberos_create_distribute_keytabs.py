@@ -58,6 +58,11 @@ try:
 			print command
 			os.system(command)
 			
+			#Delete local copy of generated keytab file
+			command = "rm -rf " + filename
+			print command
+			os.system(command)
+			
 	print ("Finished Iterating")		
 	
 finally:
