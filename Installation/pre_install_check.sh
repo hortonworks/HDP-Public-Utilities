@@ -132,8 +132,8 @@ for host in `cat Hostdetail.txt`; do
   printHeading "Checking ulimit openfiles"
   ULIMIT_SN=`ulimit -Sn`
   ULIMIT_HN=`ulimit -Hn`
-  if [ $ULIMIT_SN -ge 10000 ]; then echo "Ulimit Soft Openfiles value is valid: $ULIMIT_SN" ; else echo "Ulimit Soft Openfiles LOW VALUE!! $ULIMIT_SN"; fi
-  if [ $ULIMIT_SN -ge 9999 ]; then echo "Ulimit Hard Openfiles value is valid: $ULIMIT_HN" ; else echo "Ulimit Hard Openfiles LOW VALUE!! $ULIMIT_HN"; fi
+  if [ $ULIMIT_SN -ge 10000 ]; then echo "Ulimit Soft Openfiles value is valid: $ULIMIT_SN" ; else echo "Ulimit Soft Openfiles LOW VALUE! $ULIMIT_SN"; fi
+  if [ $ULIMIT_HN -ge 10000 ]; then echo "Ulimit Hard Openfiles value is valid: $ULIMIT_HN" ; else echo "Ulimit Hard Openfiles LOW VALUE! $ULIMIT_HN"; fi
 
 END
 done
