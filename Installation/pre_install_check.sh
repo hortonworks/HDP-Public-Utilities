@@ -128,5 +128,12 @@ for host in `cat Hostdetail.txt`; do
   for file in ${CONFLICTING_OS_DETECTION_FILES[@]}; do
 	if [ -f $file ]; then echo "FOUND! $file" ; else echo "not found"; fi
   done
+
+  printHeading "Checking ulimit openfiles"
+  ULIMIT_SN=`ulimit -Sn`
+  ULIMIT_HN=`ulimit -Hn`
+  if [ $ULIMIT_SN -ge 10000]; then echo "Ulimit Soft Openfiles value is valid: $ULIMIT_SN" ; else echo "Ulimit Soft Openfiles LOW VALUE!! $ULIMIT_SN"; fi
+  if [ $ULIMIT_SN -ge 9999]; then echo "Ulimit Hard Openfiles value is valid: $ULIMIT_HN" ; else echo "Ulimit Hard Openfiles LOW VALUE!! $ULIMIT_HN"; fi
+    
 END
 done
