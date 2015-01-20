@@ -135,5 +135,20 @@ for host in `cat Hostdetail.txt`; do
   if [ $ULIMIT_SN -ge 10000 ]; then echo "Ulimit Soft Openfiles value is valid: $ULIMIT_SN" ; else echo "Ulimit Soft Openfiles LOW VALUE! $ULIMIT_SN"; fi
   if [ $ULIMIT_HN -ge 10000 ]; then echo "Ulimit Hard Openfiles value is valid: $ULIMIT_HN" ; else echo "Ulimit Hard Openfiles LOW VALUE! $ULIMIT_HN"; fi
 
+  printHeading "Checking Java version"
+  JAVA_VERSION_OUT=`java -version 2>&1`
+  if [ $? -ne 0 ]
+    then
+      echo "Java is not in the path. Check that you have a valid version of Java in your system if you are not going to allow Ambari to install it for you."
+    elif echo $JAVA_VERSION_OUT | grep 'OpenJDK' > /dev/null
+      then
+        echo "OpenJDK reported.... CHECK YOUR JAVA ENVIRONMENT"
+        echo "$JAVA_VERSION_OUT"
+      else
+        echo "Java VM detected. Validate that this version in valid for the version of HDP you are going to install"
+        echo "$JAVA_VERSION_OUT"
+  fi
+
+
 END
 done
