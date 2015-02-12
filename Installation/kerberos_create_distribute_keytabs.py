@@ -34,8 +34,7 @@ try:
                         os.system(command)
 
                         #Create principal if required
-                        #command = "kadmin -p admin -kt admin.keytab -q \"addprinc -randkey " + principal + "\""
-                        command = "ipa service-add " + principal
+                        command = "kadmin -p admin -kt admin.keytab -q \"addprinc -randkey " + principal + "\""
                         print command
                         os.system(command)
 
