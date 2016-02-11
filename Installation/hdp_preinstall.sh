@@ -87,8 +87,8 @@ sudo sh -c 'echo "net.ipv6.conf.lo.disable_ipv6 = 1" >> /etc/sysctl.conf'
 
 sudo sh -c 'echo "NETWORKING_IPV6=no" >>  /etc/sysconfig/network'
 
-sudo sh -c 'echo '#Disable Swappiness' >> /etc/sysctl.conf
-sudo sh -c 'echo 'vm.swappiness=0' >> /etc/sysctl.conf
+sudo sh -c 'echo '#Disable Swappiness' >> /etc/sysctl.conf'
+sudo sh -c 'echo 'vm.swappiness=0' >> /etc/sysctl.conf'
 
 
 echo "Disabling THP"
