@@ -1,7 +1,7 @@
 #To Run On a New Cluster
 #pdsh -w ^./Hostdetail.txt 'mkdir /root/hdp'
 #./copy_file.sh hdp_preinstall.sh /root/hdp/hdp_preinstall.sh
-# Before running ./run_command.sh, add -tty to ssh, since these are sudo commands
+# Before running ./run_command.sh, change script and add -tty to ssh, since these are sudo commands
 #./run_command.sh /root/hdp/hdp_preinstall.sh
 
 
@@ -9,7 +9,7 @@
 sudo sh -c 'sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/refresh-packagekit.conf'
 
 
-Prep script for install
+#Prep script for install
 
 #umask
 #echo umask 0022 >> /etc/profile
