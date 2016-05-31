@@ -86,7 +86,7 @@ function removeMySQL() {
 
 function removeRepos() {
   if [ -d /etc/yum.repos.d ]; then
-    cd /etc/yum.repos.d && egrep $REPO_FILTER *.repo | awk -F: '{ print $1; }' | sort -u | xargs -n 1 rm -f
+    cd /etc/yum.repos.d && egrep "$REPO_FILTER" *.repo | awk -F: '{ print $1; }' | sort -u | xargs -n 1 rm -f
   fi
 }
 
